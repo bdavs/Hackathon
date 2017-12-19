@@ -6,8 +6,8 @@ with open('testfile.csv', 'w') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
     writer.writeheader()
-	name = input('Event Name:' )
-	date = input('Event Date:' )
+    name = input('Event Name: ' )
+    date = input('Event Date: ' )
     writer.writerow({'name': name, 'date': date})
 	#add remaining fields
 csvfile.close()
