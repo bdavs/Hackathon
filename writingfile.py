@@ -7,10 +7,11 @@ import os.path
 
 #connect with interface
 with open('testfile.csv', 'a') as csvfile:
-    fieldnames = ['name', 'date']
+    fieldnames = ['name', 'date', 'speaker']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     name = input('Event Name: ' )
     date = input('Event Date: ' )
-    writer.writerow({'name': name, 'date': date})
-	#add remaining fields
+    speaker = input('Event Speaker: ' )
+    writer.writerow({'name': name, 'date': date, 'speaker':speaker})
+	#add remaining field
 csvfile.close()
