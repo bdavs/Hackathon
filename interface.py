@@ -29,6 +29,7 @@ def display():
     header.grid(row=0,column=0)
     header=Label(root, text="Event Date")
     header.grid(row=0,column=1)
+    root.title("Events")
 
 def adminScreen():
     root = Tk()
@@ -42,10 +43,12 @@ def adminScreen():
 
     header=Label(root, text="Event Name")
     header.grid(row=0,column=0)
-    header=Label(root, text="Event Date")
+    header=Label(root, text=e2.get()) #"Event Date")
     header.grid(row=0,column=1)
+#    e2.pack()
 
 
+    root.title("Admin Screen")
 adminScreen()
 #display()
 mainloop()
