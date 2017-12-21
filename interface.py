@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+import tkinter.font as tkFont
 import readingfile as r
 import writingfile as w
 import time
@@ -9,6 +10,7 @@ def display():
 
 #    height = 3 #make number dynamic for number of entries #done
 #    width = 3 #update number
+    offset = 1
 
 
     d = r.fileToDict() #import data from file
@@ -23,19 +25,20 @@ def display():
 
     for i in range(len(d['name'])): #Rows
         #for v in val: #range(width): #Columns
-        e1=Label(disproot, text=d['name'][i])
-        e2=Label(disproot, text=d['date'][i])
-        e3=Label(disproot, text=d['speaker'][i])
-        e1.grid(row=i+1, column=0)
-        e2.grid(row=i+1, column=1)
-        e3.grid(row=i+1, column=2)
+        l1=Label(disproot, text=d['name'][i])
+        l2=Label(disproot, text=d['date'][i])
+        l3=Label(disproot, text=d['speaker'][i])
+        l1.grid(row=i+1, column=0)
+        l2.grid(row=i+1, column=1)
+        l3.grid(row=i+1, column=2)
         #add remaining fields
-    header=Label(disproot, text="Event Name")
-    header.grid(row=0,column=0)
-    header=Label(disproot, text="Date and Time")
-    header.grid(row=0,column=1)
-    header=Label(disproot, text="Speaker")
-    header.grid(row=0,column=2)
+    header=Label(disproot, text="Event Name",font=tkFont.Font(size=20))
+#    header.config())
+    header.grid(row=0,column=0,padx=3,pady=3)
+    header=Label(disproot, text="Date and Time",font=tkFont.Font(size=20))
+    header.grid(row=0,column=1,padx=3,pady=3)
+    header=Label(disproot, text="Speaker",font=tkFont.Font(size=20))
+    header.grid(row=0,column=2,padx=3,pady=3)
     disproot.title("Events")
 
 def add_field(root,dic,saveButton, addRow):
@@ -53,17 +56,15 @@ def add_field(root,dic,saveButton, addRow):
     addRow.grid(row=root.heightvar+1, column=0)
 
 def save_entries(dic,saveButton):
-    for key,value in dic.items():
-        for v in value:
-            print(key + ": " + v.get())
-#        print("First Name: %s\nLast Name: %s" % (e1.get(), e2.get()))
-#    saveButton.config(text="SAVED!")
-#    time.sleep(5)
-#    saveButton.config(text="SAVE")
+#    for key,value in dic.items():
+#        for v in value:
+#            print(key + ": " + v.get())
+    w.writeToFile(dic)
+
 def adminScreen():
     root = Tk()
 
-    root.heightvar = 4
+    root.heightvar = 3 #default number of new entries
     dic = {}
     dic['name'] = []
     dic['date'] = []
