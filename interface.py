@@ -31,8 +31,18 @@ def display():
     header.grid(row=0,column=1)
     root.title("Events")
 
+def show_entry_fields(dic):
+    for key,value in dic.items():
+        for v in value:
+            print(key + ": " + v.get())
+#        print("First Name: %s\nLast Name: %s" % (e1.get(), e2.get()))
+
 def adminScreen():
     root = Tk()
+    dic = {}
+    dic['name'] = []
+    dic['date'] = []
+
 
     for i in range(3): #Rows
         #for v in val: #range(width): #Columns
@@ -40,15 +50,19 @@ def adminScreen():
         e2=Entry(root, text='')
         e1.grid(row=i+1, column=0)
         e2.grid(row=i+1, column=1)
+        dic['name'].append(e1)
+        dic['date'].append(e2)
 
     header=Label(root, text="Event Name")
     header.grid(row=0,column=0)
-    header=Label(root, text=e2.get()) #"Event Date")
+    header=Label(root, text="Event Date")
     header.grid(row=0,column=1)
 #    e2.pack()
 
-
+    Button(root, text='SAVE', command=lambda: show_entry_fields(dic)).grid(row=4, column=0)
     root.title("Admin Screen")
+
 adminScreen()
 #display()
 mainloop()
+
