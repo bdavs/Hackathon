@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import readingfile as r
+import writingfile as w
 import time
 
 def display():
@@ -93,6 +94,7 @@ def adminScreen():
     addRow = Button(root, text='+', command=lambda: add_field(root,dic,saveButton,addRow))
     addRow.grid(row=root.heightvar+1, column=0)
     root.title("Admin Screen")
+
 
 adminScreen()
 #display()
