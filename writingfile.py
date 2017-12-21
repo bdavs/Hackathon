@@ -1,6 +1,8 @@
 import csv
 import os.path
 
+def writeToFile(Dict):
+
 #needsHeader = True
 #if os.path.exists('testfile.csv'):
 #    needsHeader = False
@@ -9,9 +11,10 @@ import os.path
 with open('testfile.csv', 'a') as csvfile:
     fieldnames = ['name', 'date', 'speaker']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    name = input('Event Name: ' )
-    date = input('Event Date: ' )
-    speaker = input('Event Speaker: ' )
-    writer.writerow({'name': name, 'date': date, 'speaker':speaker})
+    for i in range(len(Dict['name']))
+        name=Dict['name'][i]
+        date=Dict['date'][i]
+        speaker=Dict['speaker'][i]
+        writer.writerow({'name': name, 'date': date, 'speaker':speaker})
 	#add remaining field
 csvfile.close()
