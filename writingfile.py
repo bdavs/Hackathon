@@ -8,7 +8,7 @@ def writeToFile(Dict):
     with open('testfile.csv', 'a') as csvfile:
         fieldnames = ['name', 'date', 'speaker']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        for i in range(len(Dict['name']))
+        for i in range(len(Dict['name'])):
             name=Dict['name'][i]
             date=Dict['date'][i]
             speaker=Dict['speaker'][i]
