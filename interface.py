@@ -21,7 +21,8 @@ def display():
         error=Label(disproot, text="No entries in table")
         error.grid(row=0,column=0)
         mainloop()
-        quit()
+#        break
+#        quit()
 
     for i in range(len(d['name'])): #Rows
         #for v in val: #range(width): #Columns
@@ -33,12 +34,12 @@ def display():
         l3.grid(row=i+1, column=2)
         #add remaining fields
     header=Label(disproot, text="Event Name",font=tkFont.Font(size=20))
-#    header.config())
     header.grid(row=0,column=0,padx=3,pady=3)
     header=Label(disproot, text="Date and Time",font=tkFont.Font(size=20))
     header.grid(row=0,column=1,padx=3,pady=3)
     header=Label(disproot, text="Speaker",font=tkFont.Font(size=20))
     header.grid(row=0,column=2,padx=3,pady=3)
+    Button(disproot,text="Refresh").grid(row=0,column=3)
     disproot.title("Events")
 
 def add_field(root,dic,saveButton, addRow):
@@ -56,11 +57,25 @@ def add_field(root,dic,saveButton, addRow):
     addRow.grid(row=root.heightvar+1, column=0)
 
 def save_entries(dic,saveButton):
-#    for key,value in dic.items():
-#        for v in value:
-#            print(key + ": " + v.get())
-    w.writeToFile(dic)
+    valueDict = {}
+    valueDict['name'] = []
+    valueDict['date'] = []
+    valueDict['speaker'] = []
+    tempvar = ''
+    for key,value in dic.items():
+        for v in value:
+            tempvar = v.get()
+#            print(key + ": " + tempvar)
+            valueDict[key].append(tempvar)
 
+    for i in reversed(range(len(valueDict['name']))):
+        if valueDict['name'][i] is '' and valueDict['date'][i] is '' and valueDict['speaker'][i] is '' :
+            del valueDict['name'][i]
+            del valueDict['date'][i]
+            del valueDict['speaker'][i]
+    w.writeToFile(valueDict)
+    saveButton.config(text="SAVED!")
+#    print("hello?!?!?")
 def adminScreen():
     root = Tk()
 
@@ -98,6 +113,6 @@ def adminScreen():
 
 
 adminScreen()
-#display()
+display()
 mainloop()
 
