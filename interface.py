@@ -4,7 +4,7 @@ import tkinter.font as tkFont
 import readingfile as r
 import writingfile as w
 import adminInterface as adminInterface
-import time
+import datetime
 
 def display():
     disproot = Tk()
@@ -57,11 +57,14 @@ def display():
     #add refresh button
     Button(disproot,text="Refresh",command=lambda:refresh(disproot)).grid(row=0,column=3)
 
-    #name window
+    temp = datetime.datetime.now().strftime("%A, %-d %B %Y %-I:%M%p")
+    Label(disproot,text=temp).grid(row=2,column=3)
+
+    #set up window
     disproot.title("Events")
     disproot.attributes("-zoomed",True)
     disproot.grid_columnconfigure([0,1,2,3],weight=1)
-    #disproot.grid_columnconfigure(weight=1)
+
 def refresh(disproot):
 #refresh currently just destroys the current window and redraws it.
 #in future maybe make it just update the list dynamically
