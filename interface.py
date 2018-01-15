@@ -23,15 +23,23 @@ def display():
         mainloop()
 #        break
 #        quit()
+    currentEvent = True
 
     for i in range(len(d['name'])): #Rows
         #for v in val: #range(width): #Columns
-        l1=Label(disproot, text=d['name'][i])
-        l2=Label(disproot, text=d['date'][i])
-        l3=Label(disproot, text=d['speaker'][i])
+        if currentEvent is True:
+            l1=Label(disproot, text=d['name'][i],font=tkFont.Font(size=30))
+            l2=Label(disproot, text=d['date'][i],font=tkFont.Font(size=30))
+            l3=Label(disproot, text=d['speaker'][i],font=tkFont.Font(size=72))
+            currentEvent = False
+        else:
+            l1=Label(disproot, text=d['name'][i])
+            l2=Label(disproot, text=d['date'][i])
+            l3=Label(disproot, text=d['speaker'][i])
         l1.grid(row=i+1, column=0)
         l2.grid(row=i+1, column=1)
         l3.grid(row=i+1, column=2)
+        
         #add remaining fields
     header=Label(disproot, text="Event Name",font=tkFont.Font(size=20))
     header.grid(row=0,column=0,padx=3,pady=3)
