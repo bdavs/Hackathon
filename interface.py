@@ -1,14 +1,18 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter.font as tkFont
+
 import readingfile as r
 import writingfile as w
 import adminInterface as adminInterface
+import test1 as cal
+
 import datetime
 
 def display():
     disproot = Tk()
 
+    disproot.data = {}
 #    height = 3 #make number dynamic for number of entries #done
 #    width = 3 #update number
     offset = 1
@@ -60,6 +64,10 @@ def display():
     temp = datetime.datetime.now().strftime("%A, %-d %B %Y %-I:%M%p")
     Label(disproot,text=temp).grid(row=2,column=3)
 
+    choose_btn = Button(disproot, text='Choose',command=lambda:popup(disproot))
+    show_btn = Button(disproot, text='Show Selected',command=lambda:print_selected_date(disproot))
+    choose_btn.grid(row=3,column=3)
+    show_btn.grid(row=4,column=3)
     #set up window
     disproot.title("Events")
     disproot.attributes("-zoomed",True)
@@ -71,8 +79,18 @@ def refresh(disproot):
     disproot.destroy()
     display()
 
-display()
-adminInterface.adminScreen()
+def popup(disproot):
+            #child = tk.Toplevel()
+            calendar1 = cal.Calendar(Tk(), disproot.data)
 
-mainloop()
+def print_selected_date(disproot):
+            print(disproot.data)
+
+
+
+if __name__ == "__main__":
+    display()
+    adminInterface.adminScreen()
+
+    mainloop()
 
