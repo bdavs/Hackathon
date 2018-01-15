@@ -16,6 +16,7 @@ def display():
     #setup fonts
     headerFont = tkFont.Font(size=30,underline=True)
     currentEventFont = tkFont.Font(size=40,weight='bold')
+    eventFont = tkFont.Font(size=15)
 
     d = r.fileToDict() #import data from file
 
@@ -30,28 +31,42 @@ def display():
     currentEvent = True
 
     for i in range(len(d['name'])): #Rows
-        #for v in val: #range(width): #Columns
+        #current events in bold
         if currentEvent is True:
             l1=Label(disproot, text=d['name'][i],font=currentEventFont)
             l2=Label(disproot, text=d['date'][i],font=currentEventFont)
             l3=Label(disproot, text=d['speaker'][i],font=currentEventFont)
             currentEvent = False
+        #other events smaller
         else:
-            l1=Label(disproot, text=d['name'][i])
-            l2=Label(disproot, text=d['date'][i])
-            l3=Label(disproot, text=d['speaker'][i])
+            l1=Label(disproot, text=d['name'][i],font=eventFont)
+            l2=Label(disproot, text=d['date'][i],font=eventFont)
+            l3=Label(disproot, text=d['speaker'][i],font=eventFont)
         l1.grid(row=i+1, column=0)
         l2.grid(row=i+1, column=1)
         l3.grid(row=i+1, column=2)
 
+    #set up headers in larger font
     header=Label(disproot, text="Event Name",font=headerFont)
     header.grid(row=0,column=0,padx=3,pady=3)
     header=Label(disproot, text="Date and Time",font=headerFont)
     header.grid(row=0,column=1,padx=3,pady=3)
     header=Label(disproot, text="Speaker",font=headerFont)
     header.grid(row=0,column=2,padx=3,pady=3)
-    Button(disproot,text="Refresh").grid(row=0,column=3)
+
+    #add refresh button
+    Button(disproot,text="Refresh",command=lambda:refresh(disproot)).grid(row=0,column=3)
+
+    #name window
     disproot.title("Events")
+    disproot.attributes("-zoomed",True)
+    disproot.grid_columnconfigure([0,1,2,3],weight=1)
+    #disproot.grid_columnconfigure(weight=1)
+def refresh(disproot):
+#refresh currently just destroys the current window and redraws it.
+#in future maybe make it just update the list dynamically
+    disproot.destroy()
+    display()
 
 display()
 adminInterface.adminScreen()
