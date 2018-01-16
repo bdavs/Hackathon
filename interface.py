@@ -70,7 +70,7 @@ def display():
     show_btn.grid(row=4,column=3)
     #set up window
     disproot.title("Events")
-    disproot.attributes("-zoomed",True)
+   # disproot.attributes("-zoomed",True)
     disproot.grid_columnconfigure([0,1,2,3],weight=1)
 
 def refresh(disproot):
