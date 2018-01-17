@@ -90,7 +90,7 @@ def print_selected_date(disproot):
 
 if __name__ == "__main__":
     display()
-    adminInterface.adminScreen()
+    adminInterface.MainApplication. adminScreen()
 
     mainloop()
 

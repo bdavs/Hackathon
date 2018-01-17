@@ -11,5 +11,6 @@
 ()check for overlapping entries
 (/)check for missing data
 ()add date from calendar
+()update based on current time
 (/)add refresh to display
 
