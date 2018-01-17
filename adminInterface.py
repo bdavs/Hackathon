@@ -10,12 +10,11 @@ import sys
 import test1 as cal
 
 
-a = ['']
+
 class MainApplication(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-#        self._global_wealth = 1
 
     def add_field(self,root,dic,saveButton, addRow):
         e1=Entry(root, text='')
@@ -33,7 +32,7 @@ class MainApplication(tk.Frame):
 
     def save_entries(self,dic,saveButton,root):
         valueDict = {}
-        print(root.data)
+#        print(root.data)
         valueDict['name'] = []
         valueDict['date'] = []
         valueDict['speaker'] = []
@@ -41,7 +40,6 @@ class MainApplication(tk.Frame):
         for key,value in dic.items():
             for v in value:
                 tempvar = v.get()
-    #            print(key + ": " + tempvar)
                 valueDict[key].append(tempvar)
 
         for i in reversed(range(len(valueDict['name']))):
@@ -52,52 +50,34 @@ class MainApplication(tk.Frame):
         w.writeToFile(valueDict)
         saveButton.config(text="SAVED!")
 
-    
-    # @property
-
-#    def global_wealth_get(self):
-#            return self._global_wealth
-
-
-#    def global_wealth_set(self,value):
-#        self._global_wealth = value
-#        print("aaa")
-        #for callback in self._observers:
-        #    print('announcing change')
-        #    callback(self._global_wealth)
-    
 
     def adminScreen(self):
-        #root = Tk()
 
-        #global_wealth = 2
-        
-        root.data = {}
-        #global_wealth =3
-        
+        root.data = {} #is this still used
         root.heightvar = 3 #default number of new entries
         dic = {}
         dic['name'] = []
         dic['date'] = []
         dic['speaker'] = []
 
-        caption = "hello?"
-        content = StringVar()
+
+        content = [] #StringVar()
+        e2 = [] #entry
+        choose_btn = [] #button
         for i in range(root.heightvar): #Rows
-            #for v in val: #range(width): #Columns
             e1=Entry(root, text='')
-            e2=Entry(root,text=caption, textvariable=content)
-            choose_btn = Button(root, text='Choose',command=lambda:self.popup(root,content))
+            content.append(StringVar())
+            e2.append(Entry(root, textvariable=content[i]))
+            choose_btn.append(Button(root, text='Choose',command=lambda q=i:self.popup(root,content[q])))
             e3=Entry(root, text='')
-#            e2.insert(0,"poop")
-            content.set("test")
             e1.grid(row=i+1, column=0)
-            e2.grid(row=i+1, column=1)
-            choose_btn.grid(row=i+1, column=2)
+            e2[i].grid(row=i+1, column=1)
+            choose_btn[i].grid(row=i+1, column=2)
             e3.grid(row=i+1, column=3)
             dic['name'].append(e1)
-            dic['date'].append(e2)
+            dic['date'].append(e2[i])
             dic['speaker'].append(e3)
+
         header=Label(root, text="Event Name")
         header.grid(row=0,column=0)
         header=Label(root, text="Date and Time")
@@ -112,22 +92,16 @@ class MainApplication(tk.Frame):
         root.title("Admin Screen")
 
     def popup(self,root,content):
-
-#        lambda a:content[0].set(a[0]))
-        
-        calendar1 = cal.Calendar(tk.Tk(), a)
-        print(calendar1.values)
-        content.set(a[0])
-#        temp = datetime.datetime.now().strftime("%A, %-d %B %Y %-I:%M%p")
-#        print("content " + str(content[0]))
-#
-#    global_wealth = property(global_wealth_get, global_wealth_set)
+        a = ['']
+        new = tk.Toplevel(self)             #make new subwindow
+        calendar1 = cal.Calendar(new, a)    #make calendar window
+        root.wait_window(new)               #wait until window closes
+        content.set(a[0])                   #set entry as selected datetime
 
 if __name__ == '__main__':
-#    print("hello")
-#global_wealth=6
+
     root = tk.Tk()
     MainApplication(root).adminScreen()
-#display()
+#    display()
     root.mainloop()
 
