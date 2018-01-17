@@ -7,7 +7,7 @@ import writingfile as w
 import time
 import datetime
 import sys
-import test1 as cal
+import calendarApp as cal
 
 
 
@@ -95,7 +95,11 @@ class MainApplication(tk.Frame):
         a = ['']
         new = tk.Toplevel(self)             #make new subwindow
         calendar1 = cal.Calendar(new, a)    #make calendar window
+#        root.withdraw()
+        new.grab_set()
         root.wait_window(new)               #wait until window closes
+        new.grab_release()
+#        root.deiconify()
         content.set(a[0])                   #set entry as selected datetime
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ def writeToFile(Dict):
 
 
 #connect with interface
-    with open('testfile.csv', 'a') as csvfile:
+    with open('dataFile.csv', 'a') as csvfile:
         fieldnames = ['name', 'date', 'speaker']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         for i in range(len(Dict['name'])):
