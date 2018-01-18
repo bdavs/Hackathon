@@ -106,6 +106,10 @@ class Calendar:
         hour = tk.Spinbox(self.parent, from_=0, to=23)
         self.wid.append(hour)
         hour.grid(row=9, column=0, columnspan=7)
+      
+        minutes = tk.Spinbox(self.parent, values=(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55))
+        self.wid.append(minutes)
+        minutes.grid(row=9, column=9, columnspan=7)
 
         ok = tk.Button(self.parent, width=5, text='OK', command=self.kill_and_save)
         self.wid.append(ok)
