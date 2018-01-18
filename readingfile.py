@@ -2,11 +2,8 @@ import csv
 import os.path
 
 def fileToDict():
-    d = {}
-    d['name'] = []
-    d['date'] = []
-    d['speaker'] = []
-    #add remaining fields
+    d = {'name':[], 'date':[], 'speaker':[] }
+
     if not os.path.exists('dataFile.csv'):
         return(-1)
     dictReader = csv.DictReader(open('dataFile.csv', 'r'), fieldnames = ['name', 'date','speaker'], delimiter = ',', quotechar = '"')

@@ -19,12 +19,10 @@ class MainApplication(tk.Frame):
 #        disproot = Tk()
 
         disproot.data = {}
-    #    height = 3 #make number dynamic for number of entries #done
-    #    width = 3 #update number
         offset = 1
 
         #setup fonts
-        headerFont = tkFont.Font(root=self.parent,size=30,underline=True)
+        headerFont = tkFont.Font(root=disproot,size=30,underline=True)
         currentEventFont = tkFont.Font(root=disproot,size=40,weight='bold')
         eventFont = tkFont.Font(root=disproot,size=15)
 
@@ -38,6 +36,19 @@ class MainApplication(tk.Frame):
             mainloop()
 
         currentEvent = True
+
+
+        #Sort the list
+        newD = {'name':[], 'date':[], 'speaker':[] }
+        while(len(d['name']) > 0):
+            minIndex, minValue = min(enumerate(d['date']), key=lambda v: v[1])
+            newD['name'].append( d['name'].pop(minIndex))
+            newD['date'].append( d['date'].pop(minIndex))
+            newD['speaker'].append( d['speaker'].pop(minIndex))
+        d=newD
+
+
+
 
         for i in range(len(d['name'])): #Rows
             #current events in bold
@@ -66,45 +77,33 @@ class MainApplication(tk.Frame):
         #add refresh button
         Button(disproot,text="Refresh",command=lambda:self.refresh(disproot)).grid(row=0,column=3)
 
-        temp = datetime.datetime.now().strftime("%A, %-d %B %Y %-I:%M%p")
-        Label(disproot,text=temp).grid(row=2,column=3)
+#        temp = datetime.datetime.now().strftime("%A, %-d %B %Y %-I:%M%p")
+#        Label(disproot,text=temp).grid(row=2,column=3)
 
-        choose_btn = Button(disproot, text='Choose',command=lambda:self.popup(disproot))
-        show_btn = Button(disproot, text='Show Selected',command=lambda:self.print_selected_date(disproot))
-        choose_btn.grid(row=3,column=3)
-        show_btn.grid(row=4,column=3)
         #set up window
         disproot.title("Events")
-       # disproot.attributes("-zoomed",True)
+       # disproot.attributes("-zoomed",True) #fullscreen
         disproot.grid_columnconfigure([0,1,2,3],weight=1)
 
     def refresh(self,disproot):
-    #refresh currently just destroys the current window and redraws it.
-    #in future maybe make it just update the list dynamically
-        disproot.destroy()
+    #refresh destroys all widgets in the current window and redraws them.
+
+        for w in disproot.winfo_children():
+            w.destroy()
+
         self.display()
-
-    def popup(self,disproot):
-                #child = tk.Toplevel()
-                calendar1 = cal.Calendar(Tk(), disproot.data)
-
-    def print_selected_date(self,disproot):
-                print(disproot.data)
-
-
 
 if __name__ == "__main__":
 
-
     disproot = tk.Tk()
-#    disproot = tk.Toplevel(root)
+
     MainApplication(disproot).display()
-#    display()
+#    adminInterface.MainApplication.adminScreen(self) #starts admin screen (maybe)
     disproot.mainloop()
 
 
-#    MainApplication.display()
-#    adminInterface.MainApplication.adminScreen(self)
-#
-#    mainloop()
+
+
+
+
 
