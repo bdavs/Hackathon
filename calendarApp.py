@@ -19,8 +19,10 @@ class Calendar:
         self.month_selected = self.month
         self.year_selected = self.year
         self.day_name = ''
+        self.hour=0
+        self.minute=0
 
-        self.setup(self.year, self.month)
+        self.setup(self.year, self.month, self.hour, self.minute)
 
     def clear(self):
         for w in self.wid[:]:
@@ -36,7 +38,7 @@ class Calendar:
             self.year -= 1
         #self.selected = (self.month, self.year)
         self.clear()
-        self.setup(self.year, self.month)
+        self.setup(self.year, self.month, self.hour, self.minute)
 
     def go_next(self):
         if self.month < 12:
@@ -47,12 +49,14 @@ class Calendar:
 
         #self.selected = (self.month, self.year)
         self.clear()
-        self.setup(self.year, self.month)
+        self.setup(self.year, self.month, self.hour, self.minute)
 
-    def selection(self, day, name):
+    def selection(self, day, name, hour, minute):
         self.day_selected = day
         self.month_selected = self.month
         self.year_selected = self.year
+        self.hour=hour
+        self.minute=minute
         self.day_name = name
 
         #data
@@ -63,15 +67,15 @@ class Calendar:
 #        self.values['day_name'] = name
 #        self.values['month_name'] = calendar.month_name[self.month_selected]
 
-        self.values[0] = str(datetime.date(self.year, self.month, day))
+        self.values[0] = str(datetime.datetime(self.year, self.month, day, int(self.hour),int(self.minute)))
 
 #        s = tempval
 #        print(str(tempval) + "    " + str(self.values))
 #        values = self.values
         self.clear()
-        self.setup(self.year, self.month)
+        self.setup(self.year, self.month, self.hour, self.minute)
 
-    def setup(self, y, m):
+    def setup(self, y, m, h, minu):
         left = tk.Button(self.parent, text='<', command=self.go_prev)
         self.wid.append(left)
         left.grid(row=0, column=1)
@@ -94,7 +98,7 @@ class Calendar:
             for d, day in enumerate(week):
                 if day:
                     #print(calendar.day_name[day])
-                    b = tk.Button(self.parent, width=1, text=day, command=lambda day=day:self.selection(day, calendar.day_name[(day-1) % 7]))
+                    b = tk.Button(self.parent, width=1, text=day, command=lambda day=day:self.selection(day, calendar.day_name[(day-1) % 7], self.hour, self.minute))
                     self.wid.append(b)
                     b.grid(row=w, column=d)
 
@@ -103,19 +107,33 @@ class Calendar:
         self.wid.append(sel)
         sel.grid(row=8, column=0, columnspan=7)
 
-        hour = tk.Spinbox(self.parent, from_=0, to=23)
+        hour = tk.Spinbox(self.parent, from_=0, to=23, command=lambda:self.updatehour(hour))
+        hour.delete(0,"end")
+        hour.insert(0,h)
         self.wid.append(hour)
         hour.grid(row=9, column=0, columnspan=7)
-      
-        minutes = tk.Spinbox(self.parent, values=(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55))
+       # self.hour=hour_data
+     
+        minutes = tk.Spinbox(self.parent, values=(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55), command=lambda:self.updateminute(minutes))
+        minutes.delete(0,"end")
+        minutes.insert(0,minu)
         self.wid.append(minutes)
         minutes.grid(row=9, column=9, columnspan=7)
+       # self.minute=minute_data
 
         ok = tk.Button(self.parent, width=5, text='OK', command=self.kill_and_save)
         self.wid.append(ok)
         ok.grid(row=10, column=2, columnspan=3, pady=10)
 
-
+    def updatehour(self,hour):
+       hour_data=hour.get()
+       self.hour=hour_data
+       print(hour_data)
+       print(self.hour)
+   
+    def updateminute(self,minutes):
+       minute_data=minutes.get()
+       self.minute=minute_data
 
     def kill_and_save(self):
         self.parent.destroy()
