@@ -78,21 +78,21 @@ class Calendar:
     def setup(self, y, m, h, minu):
         left = tk.Button(self.parent, text='<', command=self.go_prev)
         self.wid.append(left)
-        left.grid(row=0, column=1)
+        left.grid(row=1, column=1)
 
         header = tk.Label(self.parent, height=2, text='{}   {}'.format(calendar.month_abbr[m], str(y)))
         self.wid.append(header)
-        header.grid(row=0, column=2, columnspan=3)
+        header.grid(row=1, column=2, columnspan=3)
 
         right = tk.Button(self.parent, text='>', command=self.go_next)
         self.wid.append(right)
-        right.grid(row=0, column=5)
+        right.grid(row=1, column=5)
 
         days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         for num, name in enumerate(days):
             t = tk.Label(self.parent, text=name[:3])
             self.wid.append(t)
-            t.grid(row=1, column=num)
+            t.grid(row=2, column=num)
 
         for w, week in enumerate(self.cal.monthdayscalendar(y, m), 2):
             for d, day in enumerate(week):
@@ -102,24 +102,28 @@ class Calendar:
                     self.wid.append(b)
                     b.grid(row=w, column=d)
 
-        sel = tk.Label(self.parent, height=2, text='{} {} {} {}'.format(
-            self.day_name, calendar.month_name[self.month_selected], self.day_selected, self.year_selected))
+        sel = tk.Label(self.parent, height=2, text='{}:{} {} {} {} {}'.format(
+            self.hour, self.minute, self.day_name, calendar.month_name[self.month_selected], self.day_selected, self.year_selected))
         self.wid.append(sel)
-        sel.grid(row=8, column=0, columnspan=7)
+        sel.grid(row=9, column=0, columnspan=7)
 
-        hour = tk.Spinbox(self.parent, from_=0, to=23, command=lambda:self.updatehour(hour))
+        hour = tk.Spinbox(self.parent, width =2,from_=0, to=23, format="%02.0f", command=lambda:self.updatehour(hour))
         hour.delete(0,"end")
         hour.insert(0,h)
         self.wid.append(hour)
-        hour.grid(row=9, column=0, columnspan=7)
+        hour.grid(row=0, column=4)
        # self.hour=hour_data
-     
-        minutes = tk.Spinbox(self.parent, values=(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55), command=lambda:self.updateminute(minutes))
+
+        minutes = tk.Spinbox(self.parent, width = 2, from_=00, to=55, increment=5, format="%02.0f",command=lambda:self.updateminute(minutes))
         minutes.delete(0,"end")
         minutes.insert(0,minu)
         self.wid.append(minutes)
-        minutes.grid(row=9, column=9, columnspan=7)
+        minutes.grid(row=0, column=5)
        # self.minute=minute_data
+
+        timeLabel = tk.Label(self.parent, text="Enter Time:")
+        self.wid.append(timeLabel)
+        timeLabel.grid(row=0, column=1,columnspan=2,pady=10)
 
         ok = tk.Button(self.parent, width=5, text='OK', command=self.kill_and_save)
         self.wid.append(ok)
@@ -128,9 +132,9 @@ class Calendar:
     def updatehour(self,hour):
        hour_data=hour.get()
        self.hour=hour_data
-       print(hour_data)
-       print(self.hour)
-   
+       #print(hour_data)
+       #print(self.hour)
+
     def updateminute(self,minutes):
        minute_data=minutes.get()
        self.minute=minute_data

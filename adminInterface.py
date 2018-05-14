@@ -11,20 +11,28 @@ import calendarApp as cal
 
 
 
+content = [] #StringVar()
+e2 = [] #entry
+choose_btn = [] #button
+
 class MainApplication(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
 
     def add_field(self,root,dic,saveButton, addRow):
+        i=len(content)
         e1=Entry(root, text='')
-        choose_btn = Button(root, text='Choose',command=lambda:popup(root))
+        content.append(StringVar())
+        e2.append(Entry(root, textvariable=content[i]))
+        choose_btn.append(Button(root, text='Choose',command=lambda q=i:self.popup(root,content[q])))
         e3=Entry(root, text='')
-        e1.grid(row=root.heightvar+1, column=0)
-        choose_btn.grid(row=root.heightvar+1, column=1)
-        e3.grid(row=root.heightvar+1, column=2)
+        e1.grid(row=i+1, column=0)
+        e2[i].grid(row=i+1, column=1)
+        choose_btn[i].grid(row=i+1, column=2)
+        e3.grid(row=i+1, column=3)
         dic['name'].append(e1)
-        dic['date'].append(str(root.data))
+        dic['date'].append(e2[i])
         dic['speaker'].append(e3)
         root.heightvar+=1
         saveButton.grid(row=root.heightvar+1, column=2)
@@ -61,9 +69,6 @@ class MainApplication(tk.Frame):
         dic['speaker'] = []
 
 
-        content = [] #StringVar()
-        e2 = [] #entry
-        choose_btn = [] #button
         for i in range(root.heightvar): #Rows
             e1=Entry(root, text='')
             content.append(StringVar())
